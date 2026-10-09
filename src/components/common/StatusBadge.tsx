@@ -12,7 +12,7 @@ const tones: Record<string, string> = {
   "Human Input Required": "bg-amber-50 text-warning border-amber-100",
   Low: "bg-slate-50 text-muted border-slate-200",
   Medium: "bg-amber-50 text-warning border-amber-100",
-  High: "bg-orange-50 text-orange-700 border-orange-100",
+  High: "bg-red-50 text-danger border-red-100",
   Critical: "bg-red-50 text-danger border-red-100"
 };
 

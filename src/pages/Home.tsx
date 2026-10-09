@@ -1,4 +1,4 @@
-import { ArrowRight, Bot, PlayCircle, ShieldAlert, Workflow } from "lucide-react";
+import { ArrowRight, Bot, CircleAlert, CircleCheck, Clock3, MoreHorizontal, Play, ShieldAlert, Workflow } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { MetricCard } from "../components/common/MetricCard";
 import { PageHeader } from "../components/common/PageHeader";
@@ -11,61 +11,55 @@ export function Home() {
   const totalExecutions = workflows.reduce((sum, item) => sum + item.executions, 0);
   return (
     <div>
-      <section className="mb-6 overflow-hidden rounded-2xl bg-navy p-6 text-white shadow-enterprise md:p-8">
-        <div className="max-w-4xl">
-          <p className="mb-3 text-sm font-semibold text-cyan">Enterprise multi-agent orchestration</p>
-          <h1 className="text-3xl font-bold tracking-normal md:text-5xl">Build, Orchestrate and Govern Intelligent AI Agents</h1>
-          <p className="mt-4 max-w-3xl leading-7 text-white/78">Design enterprise-grade multi-agent workflows, automate complex tasks, simulate business scenarios, and monitor AI operations from one unified platform.</p>
-          <div className="mt-6 flex flex-wrap gap-3">
-            <Link className="btn btn-primary" to="/workflow-builder">Create Workflow <ArrowRight size={17} /></Link>
-            <Link className="btn border border-white/20 bg-white/10 text-white hover:bg-white/15" to="/simulation-lab">Explore Simulation Lab</Link>
-            <Link className="btn bg-white text-navy hover:bg-blue-50" to="/agents">Browse Agent Catalogue</Link>
-          </div>
+      <section className="mb-6 flex flex-col justify-between gap-4 border-b border-border pb-5 sm:flex-row sm:items-end">
+        <div>
+          <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-muted"><span>Operations</span><span className="text-border">/</span><span>Overview</span></div>
+          <h1 className="mt-2 text-2xl font-bold text-navy">Agent operations</h1>
+          <p className="mt-1 text-sm text-muted">Monitor workflow health, policy posture, and business-critical activity.</p>
+        </div>
+        <div className="flex flex-wrap gap-2">
+          <Link className="btn btn-secondary" to="/simulation-lab">Run simulation</Link>
+          <Link className="btn btn-primary" to="/workflow-builder">Create workflow <ArrowRight size={16} /></Link>
         </div>
       </section>
+      <section className="mb-6 grid gap-3 rounded-lg border border-border bg-white p-4 md:grid-cols-3">
+        <div className="flex items-center gap-3 border-b border-border pb-3 md:border-b-0 md:border-r md:pb-0"><span className="flex h-9 w-9 items-center justify-center rounded-md bg-emerald-50 text-success"><CircleCheck size={19} /></span><div><p className="text-sm font-semibold text-navy">Production environment</p><p className="text-xs text-muted">All core services operational</p></div></div>
+        <div className="flex items-center gap-3 border-b border-border pb-3 md:border-b-0 md:border-r md:pb-0 md:pl-4"><span className="flex h-9 w-9 items-center justify-center rounded-md bg-amber-50 text-warning"><CircleAlert size={19} /></span><div><p className="text-sm font-semibold text-navy">4 items need review</p><p className="text-xs text-muted">2 policy exceptions, 2 approvals</p></div></div>
+        <div className="flex items-center gap-3 md:pl-4"><span className="flex h-9 w-9 items-center justify-center rounded-md bg-blue-50 text-enterprise"><Clock3 size={19} /></span><div><p className="text-sm font-semibold text-navy">Last sync 2 minutes ago</p><p className="text-xs text-muted">US East / Production</p></div></div>
+      </section>
       <div className="grid gap-4 md:grid-cols-3 xl:grid-cols-6">
-        <MetricCard label="Total Workflows" value={workflows.length} icon={Workflow} />
-        <MetricCard label="Active Workflows" value={workflows.filter((w) => w.status === "Active").length} />
-        <MetricCard label="Available Agents" value={12} icon={Bot} />
-        <MetricCard label="Workflow Executions" value={totalExecutions} />
-        <MetricCard label="Successful Executions" value="94%" />
-        <MetricCard label="Guardrail Alerts" value={4} icon={ShieldAlert} />
+        <MetricCard label="Managed workflows" value={workflows.length} hint="Across 4 business domains" icon={Workflow} />
+        <MetricCard label="Active workflows" value={workflows.filter((w) => w.status === "Active").length} hint="No interrupted deployments" />
+        <MetricCard label="Available agents" value={12} hint="3 require recertification" icon={Bot} />
+        <MetricCard label="Workflow executions" value={totalExecutions.toLocaleString()} hint="Last 30 days" />
+        <MetricCard label="Execution success" value="94.2%" hint="Up 1.8% from last period" />
+        <MetricCard label="Open guardrails" value={4} hint="2 require human review" icon={ShieldAlert} />
       </div>
-      <div className="mt-6 grid gap-5 xl:grid-cols-[1.5fr_1fr]">
-        <section>
-          <PageHeader title="Recent Workflows" />
-          <div className="grid gap-4 lg:grid-cols-2">
-            {workflows.slice(0, 4).map((workflow) => <WorkflowCard key={workflow.id} workflow={workflow} onRun={() => navigate(`/workflow-execution/${workflow.id}`)} />)}
+      <div className="mt-6 grid gap-5 xl:grid-cols-[1.55fr_1fr]">
+        <section className="surface overflow-hidden">
+          <div className="flex items-center justify-between border-b border-border px-5 py-4"><div><h2 className="font-bold text-navy">Priority workflows</h2><p className="mt-1 text-sm text-muted">Recent production activity and execution posture</p></div><Link className="btn btn-secondary" to="/my-workflows">View all</Link></div>
+          <div className="hidden grid-cols-[minmax(0,1.7fr)_90px_82px_88px_32px] gap-3 border-b border-border bg-page px-5 py-3 text-xs font-semibold uppercase tracking-wide text-muted md:grid"><span>Workflow</span><span>Runs</span><span>Success</span><span>Status</span><span /></div>
+          <div className="divide-y divide-border">
+            {workflows.slice(0, 4).map((workflow) => <div key={workflow.id} className="grid gap-3 px-5 py-4 md:grid-cols-[minmax(0,1.7fr)_90px_82px_88px_32px] md:items-center"><div><Link className="font-semibold text-navy hover:text-enterprise" to={`/workflow-execution/${workflow.id}`}>{workflow.name}</Link><p className="mt-1 truncate text-sm text-muted">{workflow.description}</p></div><div className="text-sm font-semibold tabular-nums text-text"><span className="mr-2 text-xs font-medium text-muted md:hidden">Runs</span>{workflow.executions}</div><div className="text-sm font-semibold tabular-nums text-success"><span className="mr-2 text-xs font-medium text-muted md:hidden">Success</span>{workflow.successRate}%</div><div><span className={workflow.status === "Active" ? "inline-flex rounded-full bg-emerald-50 px-2 py-1 text-xs font-semibold text-success" : "inline-flex rounded-full bg-slate-100 px-2 py-1 text-xs font-semibold text-muted"}>{workflow.status}</span></div><button className="btn h-8 w-8 px-0 text-muted hover:bg-page hover:text-enterprise" aria-label={`Run ${workflow.name}`} onClick={() => navigate(`/workflow-execution/${workflow.id}`)}><Play size={15} /></button></div>)}
           </div>
         </section>
         <aside className="space-y-5">
           <div className="surface p-5">
-            <h2 className="font-bold text-navy">Quick Actions</h2>
+            <h2 className="font-bold text-navy">Review queue</h2>
             <div className="mt-4 grid gap-3 sm:grid-cols-2 xl:grid-cols-1">
-              {[
-                ["Create Workflow", "/workflow-builder"],
-                ["Run Simulation", "/simulation-lab"],
-                ["Browse Agents", "/agents"],
-                ["View Analytics", "/observability"]
-              ].map(([label, to]) => <Link key={label} className="btn btn-secondary justify-between" to={to}>{label}<ArrowRight size={16} /></Link>)}
+              {[["Policy exception", "Human approval required", "/governance", "High"], ["Cost anomaly", "Marketing operations agent", "/cost-utilisation", "Medium"], ["Agent recertification", "Due in 3 days", "/agents", "Low"]].map(([label, detail, to, priority]) => <Link key={label} className="group flex items-center justify-between gap-3 rounded-md border border-border p-3 transition hover:border-electric hover:bg-blue-50" to={to}><div><p className="text-sm font-semibold text-navy">{label}</p><p className="mt-1 text-xs text-muted">{detail}</p></div><span className={priority === "High" ? "text-xs font-semibold text-danger" : priority === "Medium" ? "text-xs font-semibold text-warning" : "text-xs font-semibold text-muted"}>{priority}</span></Link>)}
             </div>
           </div>
           <div className="surface p-5">
-            <h2 className="font-bold text-navy">Recent Activity</h2>
+            <div className="flex items-center justify-between"><h2 className="font-bold text-navy">Activity feed</h2><button className="btn h-8 w-8 px-0 text-muted" aria-label="More activity options"><MoreHorizontal size={18} /></button></div>
             <div className="mt-4 space-y-4">
-              {["Dashboard architecture approved", "Compliance agent requested human input", "Smart Loan simulation completed", "Cost anomaly reviewed"].map((item, index) => (
-                <div key={item} className="flex gap-3 text-sm"><span className="mt-1 h-2.5 w-2.5 rounded-full bg-electric" /><div><b>{item}</b><p className="text-muted">{index + 1}h ago</p></div></div>
+              {["Claims triage policy approved", "Compliance agent requested input", "Smart loan simulation completed", "Cost anomaly assigned to FinOps"].map((item, index) => (
+                <div key={item} className="flex gap-3 text-sm"><span className={index === 1 ? "mt-1.5 h-2 w-2 rounded-full bg-warning" : "mt-1.5 h-2 w-2 rounded-full bg-electric"} /><div><b className="font-semibold text-text">{item}</b><p className="mt-1 text-xs text-muted">{index + 1}h ago</p></div></div>
               ))}
             </div>
           </div>
         </aside>
       </div>
-      <section className="mt-6">
-        <PageHeader title="Platform Capabilities" />
-        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-5">
-          {["Workflow Orchestration", "Simulation Lab", "AI Observability", "Cost Management", "Governance"].map((name) => <div key={name} className="surface p-5"><PlayCircle className="text-enterprise" /><h3 className="mt-3 font-bold text-navy">{name}</h3><p className="mt-2 text-sm text-muted">Connected controls and mock services for realistic enterprise demos.</p></div>)}
-        </div>
-      </section>
     </div>
   );
 }

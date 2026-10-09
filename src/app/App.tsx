@@ -10,7 +10,7 @@ import { SimulationDetail } from "../pages/SimulationDetail";
 import { DashboardInsights } from "../pages/DashboardInsights";
 import { Observability } from "../pages/Observability";
 import { CostUtilisation } from "../pages/CostUtilisation";
-import { Governance } from "../pages/Governance";
+import { GovernanceControlCenter } from "../pages/GovernanceControlCenter";
 import { WorkflowExecution } from "../pages/WorkflowExecution";
 import { Chat } from "../pages/Chat";
 import { Settings } from "../pages/Settings";
@@ -30,7 +30,7 @@ export default function App() {
         <Route path="/dashboard-insights" element={<DashboardInsights />} />
         <Route path="/observability" element={<Observability />} />
         <Route path="/cost-utilisation" element={<CostUtilisation />} />
-        <Route path="/governance" element={<Governance />} />
+        <Route path="/governance" element={<GovernanceControlCenter />} />
         <Route path="/chat" element={<Chat />} />
         <Route path="/settings" element={<Settings />} />
       </Route>

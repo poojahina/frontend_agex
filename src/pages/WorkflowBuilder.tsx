@@ -12,7 +12,7 @@ const steps = ["Setup", "Requirements", "Review", "Agents", "Save & Run"];
 
 export function WorkflowBuilder() {
   const [step, setStep] = useState(0);
-  const [form, setForm] = useState({
+  const [form, setForm] = useState<Record<string, string>>({
     name: "Unified Dashboard Deployment Process",
     domain: "Business Intelligence",
     industry: "Horizontal",
