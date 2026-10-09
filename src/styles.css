@@ -1,0 +1,26 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  min-width: 320px;
+  color: #17243A;
+  background: #F5F8FC;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+button, input, select, textarea { font: inherit; }
+:focus-visible { outline: 3px solid rgba(37, 136, 216, 0.35); outline-offset: 2px; }
+
+@layer components {
+  .surface { @apply rounded-xl border border-border bg-white shadow-enterprise; }
+  .btn { @apply inline-flex min-h-10 items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm font-semibold transition disabled:cursor-not-allowed disabled:opacity-50; }
+  .btn-primary { @apply bg-enterprise text-white hover:bg-electric; }
+  .btn-secondary { @apply border border-border bg-white text-text hover:border-electric hover:text-enterprise; }
+  .btn-danger { @apply bg-danger text-white hover:brightness-95; }
+  .input { @apply min-h-10 w-full rounded-lg border border-border bg-white px-3 py-2 text-sm text-text placeholder:text-muted focus:border-electric; }
+  .label { @apply text-sm font-semibold text-text; }
+  .page-grid { @apply grid gap-5; }
+}
