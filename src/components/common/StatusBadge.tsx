@@ -2,12 +2,14 @@ import { Status, Severity } from "../../types";
 import { cn } from "../../utils/cn";
 
 const tones: Record<string, string> = {
-  Active: "bg-blue-50 text-enterprise border-blue-100",
+  Active: "bg-sky-50 text-enterprise border-sky-100",
   Published: "bg-cyan-50 text-deep border-cyan-100",
   Draft: "bg-slate-50 text-muted border-slate-200",
   Completed: "bg-emerald-50 text-success border-emerald-100",
+  Available: "bg-emerald-50 text-success border-emerald-100",
+  Disconnected: "bg-slate-50 text-muted border-slate-200",
   Failed: "bg-red-50 text-danger border-red-100",
-  Running: "bg-blue-50 text-electric border-blue-100",
+  Running: "bg-sky-50 text-enterprise border-sky-100",
   Waiting: "bg-amber-50 text-warning border-amber-100",
   "Human Input Required": "bg-amber-50 text-warning border-amber-100",
   Low: "bg-slate-50 text-muted border-slate-200",
